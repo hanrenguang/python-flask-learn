@@ -1,22 +1,39 @@
 $(function () {
+	//登录
 	$(".submit").click(function () {
-		var name = $(".name").val();
+		var username = $("#username").val();
+		var password = $("#password").val();
+
+		if(!username) {
+			alert("Please enter your username!");
+			return;
+		}
+		else if(!password) {
+			alert("Please enter your password!");
+			return;
+		}
 
 		var data = {
-			name: name
+			username: username,
+			password: password
 		};
-		//console.log(JSON.stringify(data));
 		$.ajax({
 			url: '../login',
 			data: JSON.stringify(data),
-			//dataType: 'json',
+			dataType: 'json',
 			contentType: 'application/json',
 			type: "POST",
 			success: function (data) {
-				window.location.href = '../login/'+data;
+				if (data.success) {
+					//window.location.href = '../login?user='+data.username;
+					window.location.href = '../user';
+				}
+				else {
+					alert(data.msg);
+				}
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
-				alert("error!");
+				alert("Request error!");
 			}
 		});
 	});

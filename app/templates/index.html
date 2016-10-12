@@ -1,12 +1,25 @@
 {% extends "base.html" %}
 
-{% block page_content %}
-<div class="container">
-	<form>
-		name: <input type="text" class="name"><br>
-		<a href="javascript:;" class="submit">提交</a>
+{% block styles %}
+	{{ super() }}
+	<link rel="stylesheet" type="text/css" href="../static/css/home.css">
+{% endblock %}
+
+{% block content %}
+	<form role="form">
+	  <ul class="nav nav-tabs" role="tablist">
+	    <li role="presentation" class="active"><a href="javascript:;">Sign in</a></li>
+	  </ul>
+	  <div class="form-group">
+	    <label for="username">Username</label>
+	    <input type="text" class="form-control" id="username" placeholder="Enter your username">
+	  </div>
+	  <div class="form-group">
+	    <label for="password">Password</label>
+	    <input type="password" class="form-control" id="password" placeholder="Password">
+	  </div>
+	  <button type="button" class="btn btn-default submit">Submit</button>
 	</form>
-</div>
 {% endblock %}
 
 {% block scripts %}
