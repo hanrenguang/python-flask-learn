@@ -47,16 +47,18 @@ bootstrap = Bootstrap(app)
 # 	time.sleep(10)
 
 # Home
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html');
+    if 'username' in session:
+        return render_template('hello.html', user = escape(session['username']))
+    return render_template('index.html')
 
-
-@app.route('/user')
+# hello page
+@app.route('/user', methods=['GET'])
 def user():
 	if 'username' in session:
 	    return render_template('hello.html', user = escape(session['username']))
-	return 'you are not login'
+	return render_template('unregistered.html')
 
 # login api
 @app.route('/login', methods=['POST'])
@@ -90,6 +92,14 @@ def login():
 	    return json.jsonify(success=True,
 	    	                username=username)
 
+
+# logout api
+@app.route('/logout', methods=['POST'])
+def log_out():
+	session.pop('username', None)
+	return json.jsonify(success=True)
+
+# 404 NOT FOUND
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
