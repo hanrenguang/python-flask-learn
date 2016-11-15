@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block styles %}
+	{{ super() }}
+	<link rel="stylesheet" type="text/css" href="../static/css/hello.css">
+{% endblock %}
+
+{% block button %}
+<button type="button" class="btn btn-default navbar-btn sign-out">Sign out</button>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="page-header">
+		<h1>Hello, {{user|safe}}!</h1>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+	{{ super() }}
+	<script type="text/javascript" src="static/js/websocket.js"></script>
+{% endblock %}

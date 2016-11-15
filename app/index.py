@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, json, session, url_for, escap
 from flask_script import Manager
 from flask_bootstrap import Bootstrap
 import pymysql, time, threading
+from flask_sockets import Sockets
 
 app = Flask(__name__)
 # manager = Manager(app)
@@ -57,7 +58,7 @@ def index():
 @app.route('/user', methods=['GET'])
 def user():
 	if 'username' in session:
-	    return render_template('hello.html', user = escape(session['username']))
+	    return render_template('websocket.html', user = escape(session['username']))
 	return render_template('unregistered.html')
 
 # login api
@@ -99,10 +100,19 @@ def log_out():
 	session.pop('username', None)
 	return json.jsonify(success=True)
 
+# websocket test
+@app.route('/websocket')
+def websocket(ws):
+	while True: 
+		message = ws.receive()
+		print(message)
+		ws.send("帅哥")
+
 # 404 NOT FOUND
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
 
 app.secret_key = '\xb7>M{Yd\xa4\xe6(\xd8;\x00\x1c\xac\x8d\xbb\xe6\x7f\xa3\xe5\xd3[\x04\x8d'
  
